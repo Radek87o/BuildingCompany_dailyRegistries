@@ -174,9 +174,7 @@ public class RegistryController {
 			Model theModel) throws ParseException, DateNotInScopeException, IncorrectDateFormat {
 		String correctStringDate = registryService.checkStrDateBeforeParse(stringRegistryDate);
 		Date registryDate = registryService.parseDate(correctStringDate);
-		Catering catering = registryService.getCatering(cateringId);
-		Accommodation accommodation = registryService.getAccommodation(accommodationId);
-		registryService.saveRegistry(registryId, workingTime, registryDate, absence, catering, accommodation);
+		registryService.saveRegistry(registryId, workingTime, registryDate, absence, cateringId, accommodationId);
 		Project project = registryService.getProject(projectId);
 		List<Registry> registries = registryService.getRegistryList(projectId, registryDate);
 		theModel.addAttribute("project", project);

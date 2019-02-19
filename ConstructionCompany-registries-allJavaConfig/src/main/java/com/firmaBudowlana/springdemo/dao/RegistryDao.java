@@ -87,7 +87,7 @@ public interface RegistryDao {
 	
 	public void saveRegistry(Registry registry);
 	
-	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, Catering catering, Accommodation accommodation);
+	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, int cateringId, int accommodationId);
 	
 	public List<Registry> getRegistryList(int projectId, Date registryDate);
 	

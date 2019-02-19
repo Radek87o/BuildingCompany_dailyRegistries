@@ -358,18 +358,21 @@ public class RegistryServiceImpl implements RegistryService {
 		registryDao.saveRegistry(registry);	
 	}
 	
-	@Override
-	@Transactional
-	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, Catering catering,
-			Accommodation accommodation) {
-		registryDao.saveRegistry(registryId, workingTime, registryDate, absence, catering, accommodation);
-		
-	}
+	
+	
 
 	@Override
 	@Transactional
 	public List<Registry> getRegistryList(int projectId, Date registryDate) {
 		return registryDao.getRegistryList(projectId, registryDate);
+	}
+
+	@Override
+	@Transactional
+	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, int cateringId,
+			int accommodationId) {
+		registryDao.saveRegistry(registryId, workingTime, registryDate, absence, cateringId, accommodationId);
+		
 	}
 
 	@Override

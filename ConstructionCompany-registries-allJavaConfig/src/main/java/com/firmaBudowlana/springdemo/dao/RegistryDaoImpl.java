@@ -415,17 +415,24 @@ public class RegistryDaoImpl implements RegistryDao {
 	
 
 	@Override
-	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, Catering catering,
-			Accommodation accommodation) {
+	public void saveRegistry(int registryId, int workingTime, Date registryDate, String absence, int cateringId, int accommodationId) {
 		Session session = sessionFactory.getCurrentSession();
 		
 		Registry registry = session.get(Registry.class, registryId);
 		
-		registry.setAbsence(absence);
-		registry.setAccommodation(accommodation);
-		registry.setCatering(catering);
+		registry.setAbsence(absence);		
 		registry.setWorkingTime(workingTime);
 		registry.setDate(registryDate);
+		
+		if(accommodationId!=0) {
+			Accommodation accommodation = session.get(Accommodation.class, accommodationId);
+			registry.setAccommodation(accommodation);
+		}
+		
+		if(cateringId!=0) {
+			Catering catering = session.get(Catering.class, cateringId);
+			registry.setCatering(catering);
+		}
 		
 		if(!registry.getAbsence().equals("nd.")) {
 			registry.setCatering(null);
@@ -433,15 +440,16 @@ public class RegistryDaoImpl implements RegistryDao {
 			registry.setWorkingTime(0);
 		}
 		
-		else if(registry.getCatering().getId()==0 || registry.getAccommodation().getId()==0) {
-			if(registry.getCatering().getId()==0) {
+		if(cateringId==0 || accommodationId==0) {
+			if(cateringId==0) {
 				registry.setCatering(null);
 			}
 			
-			if(registry.getAccommodation().getId()==0) {
+			if(accommodationId==0) {
 				registry.setAccommodation(null);
 			}
 		}
+		
 		registry.setDateOfIssue(new Date());
 		session.merge(registry);
 		
