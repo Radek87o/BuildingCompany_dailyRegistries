@@ -42,7 +42,7 @@ create table `users_role`
     primary key(`user_id`,`role_id`),
     constraint `FK_user_id_01` foreign key(`user_id`) references `users` (`id`) on update no action on delete no action,
     constraint `FK_role_id_01` foreign key(`role_id`) references `role`(`id`) on update no action on delete no action
-)engine=InnoDB, auto_increment=1, default charset=utf8;
+)engine=InnoDB, default charset=utf8;
 
 insert into `users_role` (user_id, role_id) values ('1','1'),('1','2');
 
@@ -82,8 +82,6 @@ create table `projekt_pracownik`
     constraint `FK_pracownik_idx` foreign key (`pracownik_id`) references `pracownik` (`id_pracownika`) on delete no action on update no action
 )engine=InnoDB default charset=utf8;
 
-drop table if exists `rejestr`;
-
 drop table if exists `nocleg`;
 
 create table `nocleg`
@@ -104,6 +102,8 @@ create table `catering`
     unique key `catering_name`(`nazwa_catering`)
 )engine=InnoDB auto_increment=1 default charset=utf8;
 
+drop table if exists `rejestr`;
+
 create table `rejestr`
 (
 	`id_rejestr` int(11) not null auto_increment,
@@ -118,7 +118,7 @@ create table `rejestr`
     primary key (`id_rejestr`),
     unique key `rejestr_name` (`data`, `pracownik_id`),
     key `FK_projekt_rejestr_idx` (`projekt_id`),
-    constraint `FK_projekt_rejestr_idx` foreign key (`projekt_id`) references `pracownik` (`id_pracownika`) on update no action on delete no action,
+    constraint `FK_projekt_rejestr_idx` foreign key (`projekt_id`) references `projekt` (`id_projektu`) on update no action on delete no action,
 	key `FK_pracownik_rejestr_idx` (`pracownik_id`),
     constraint `FK_pracownik_rejestr_idx` foreign key (`pracownik_id`) references `pracownik` (`id_pracownika`) on update no action on delete no action,
     key `FK_nocleg_rejestr_idx` (`nocleg_id`),
