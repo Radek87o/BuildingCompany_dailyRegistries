@@ -33,9 +33,6 @@ public class UserServiceImpl implements UserService {
 	RoleDao roleDao;
 	
 	@Autowired
-	RegistryDao rejestrDao;
-	
-	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
@@ -61,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void update(AppUser theAppUser, int userId) {
-		User theUser = rejestrDao.getManager(userId);
+		User theUser = userDao.findById(userId);
 		theUser.setFirstName(theAppUser.getFirstName());
 		theUser.setLastName(theAppUser.getLastName());
 		theUser.setUsername(theAppUser.getUsername());
@@ -87,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public AppUser populateAppUserToUpdate(int userId) {
-		User theUser = rejestrDao.getManager(userId);
+		User theUser = userDao.findById(userId);
 		AppUser theAppUser=new AppUser();
 		theAppUser.setFirstName(theUser.getFirstName());
 		theAppUser.setLastName(theUser.getLastName());
